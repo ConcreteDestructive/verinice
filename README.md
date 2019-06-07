@@ -141,3 +141,53 @@ Artifacts for the following platforms will be produced:
 * Windows 32 and 64 bit
 * Mac OS X 64 bit
 
+# Anpassungen
+
+Die minimal angepasste Version soll über einen Button eine Funktion bereitstellen,
+mit der eine Reihe von CSV-Dateien unmittelbar hintereinander über .VLT-Dateien
+(LTR) erzeugt werden können.
+
+Dazu wurden zwei Dateien angepasst:
+* `sernet.gs.ui.rcp.main\src\sernet\gs\ui\rcp\main\ImageCache.java`
+* `sernet.gs.ui.rcp.main\src\sernet\gs\ui\rcp\main\ApplicationActionBarAdvisor.java`
+
+und eine neue hinzugefügt:
+* `sernet.gs.ui.rcp.main\src\sernet\verinice\rcp\risk\ActionMultipleCSV.java`
+
+## Ablageort
+
+Im Hauptordner `verinice` muss ein Verzeichnis `EXPORTFILES` angelegt werden und
+sich darin eine Datei `allfiles.txt` befinden.
+In dieser Datei wird jeweils pro Zeile ein Dateiname ohne Endung angegeben.
+Für jeden dieser Namen wird nach Knopfdruck im selben Ordner eine `<dateiname>.vlt`
+gesucht, bearbeitet und das Resultat in eine `<dateiname>.csv` ausgegeben (Namen
+werden auch in lowercase umgewandelt).
+
+Man hat also bspw. eine Datei `.../verinice/EXPORTFILES/allfiles.txt` mit dem
+Inhalt:
+```
+example1
+EXAmple2
+examPLE3
+```
+	
+Dann werden die Reports `.../verinice/EXPORTFILES/example1.vlt`,
+`.../verinice/EXPORTFILES/example2.vlt` und `.../verinice/EXPORTFILES/example3.vlt`
+ausgeführt und in `.../verinice/EXPORTFILES/example1.csv`,
+`.../verinice/EXPORTFILES/example2.csv` und `.../verinice/EXPORTFILES/example3.csv`
+geschrieben.
+
+Soll das Verzeichnis `EXPORTFILES` woanders liegen, kann in der `verinice.ini` ein
+Argument `-DMultipleCSVExportDir=/woanders/EXPORTFILES/` mitgegeben und der Pfad (mit Slash
+hinten) frei definiert werden.
+
+## Sonstiges
+
+Sorry für
+* fehlende Internationalization
+* ein wiederverwendetes Icon
+* den dreckigen Code
+* die nur mäßig hilfreichen Exception-Behandlungen und
+* hoffentlich vermiedene Urheberrechts-/Lizenzverstöße (keine Absicht).
+
+Es ist nur ein Proof-Of-Concept, mit dem ich täglich schneller arbeiten kann..
