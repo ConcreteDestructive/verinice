@@ -93,6 +93,9 @@ import sernet.verinice.rcp.account.AccountView;
 import sernet.verinice.rcp.accountgroup.AccountGroupView;
 import sernet.verinice.rcp.bp.BaseProtectionPerspective;
 import sernet.verinice.rcp.risk.RiskAnalysisAction;
+// hack: multiple LTR-to-CSV export button
+// based on 'RiskAnalysisAction'
+import sernet.verinice.rcp.risk.ActionMultipleCSV;
 import sernet.verinice.report.rcp.ReportDepositView;
 import sernet.verinice.validation.CnAValidationView;
 
@@ -194,6 +197,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private ImportGstoolNotesAction importGSNotesAction;
 
     private RiskAnalysisAction runRiskAnalysisAction;
+    private ActionMultipleCSV runActionMultipleCSV;
 
     private ServerConnectionToggleAction serverConnectionToggleAction;
 
@@ -305,6 +309,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         this.bulkEditAction = new ShowBulkEditAction(window,
                 Messages.ApplicationActionBarAdvisor_16);
         this.runRiskAnalysisAction = new RiskAnalysisAction(window);
+        // initialize new Action
+        this.runActionMultipleCSV = new ActionMultipleCSV(window);
         this.accessControlEditAction = new ShowAccessControlEditAction(window,
                 Messages.ApplicationActionBarAdvisor_17);
         this.profileEditAction = new ProfileEditAction(window,
@@ -339,7 +345,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
                 this.openTaskViewAction, this.openValidationViewAction, this.reloadAction,
                 this.importGstoolAction, this.importCSVAction, this.importPersonFromLdap,
                 this.importGSNotesAction, this.showPreferencesAction, this.bulkEditAction,
-                this.runRiskAnalysisAction, this.accessControlEditAction, this.profileEditAction,
+                this.runRiskAnalysisAction,
+                this.runActionMultipleCSV, /* 'register' new action */
+                this.accessControlEditAction, this.profileEditAction,
                 this.konsolidatorAction, gsmbasicsecuritycheckAction, bausteinZuordnungAction,
                 gsmbausteinZuordnungAction, this.openDocumentViewAction, this.introAction,
                 this.openGroupViewAction, this.openReportdepositViewAction,
@@ -356,6 +364,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         openAuditViewAction.setEnabled(isOldBpPerspective);
         openTodoViewAction.setEnabled(isOldBpPerspective);
         runRiskAnalysisAction.setEnabled(!isOldBpPerspective);
+        // I don't know why. But based on RiskAnalysisAction, so doing the same here..
+        runActionMultipleCSV.setEnabled(!isOldBpPerspective);
     }
 
     @Override
@@ -411,6 +421,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         editMenu.add(this.bulkEditAction);
         editMenu.add(this.runRiskAnalysisAction);
+        editMenu.add(this.runActionMultipleCSV); // insert into main menu
         editMenu.add(this.accessControlEditAction);
         editMenu.add(this.profileEditAction);
         editMenu.add(this.konsolidatorAction);
@@ -558,6 +569,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         myToolbar.add(this.reloadAction);
         myToolbar.add(this.runRiskAnalysisAction);
+        myToolbar.add(this.runActionMultipleCSV); // and insert as a button into toolbar
         myToolbar.add(this.itNetworkConverterAction);
         myToolbar.add(new Separator());
         // Grundschutz items
