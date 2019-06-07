@@ -331,6 +331,7 @@ public final class ImageCache {
 
     // ISO 27k icons - other:
     public static final String ISO27K_RISK = "sweetie-verinice/png/16-paper-calculate-percent.png";
+    public static final String ISO27K_RISK_MCSV = "16-em-cross.png";
     /*
      * *************************************************************************
      * *************************
