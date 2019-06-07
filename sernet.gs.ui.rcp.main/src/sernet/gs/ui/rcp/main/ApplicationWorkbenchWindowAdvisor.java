@@ -41,12 +41,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PerspectiveAdapter;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.ActionBarAdvisor;
@@ -57,7 +55,6 @@ import org.eclipse.ui.internal.ViewIntroAdapterPart;
 
 import sernet.gs.ui.rcp.main.actions.ShowCheatSheetAction;
 import sernet.gs.ui.rcp.main.bsi.views.OpenCataloguesJob;
-import sernet.gs.ui.rcp.main.common.model.CnAElementHome;
 import sernet.gs.ui.rcp.main.preferences.PreferenceConstants;
 import sernet.hui.common.VeriniceContext;
 import sernet.springclient.RightsServiceClient;
@@ -169,7 +166,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
             @Override
             public IStatus runInWorkspace(IProgressMonitor monitor) {
                 Activator.inheritVeriniceContextState();
-                CnAElementHome.getInstance().preload(CnAWorkspace.getInstance().getConfDir());
                 return Status.OK_STATUS;
             }
         };
@@ -327,7 +323,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
             throw new UpdateNewsException("Malformed URL of updatesite", e);
         }
         Display.getDefault().syncExec(() -> {
-            Shell dialogShell = new Shell(Display.getCurrent().getActiveShell());
+            Shell dialogShell = Display.getCurrent().getActiveShell();
             UpdateNewsDialog newsDialog = new UpdateNewsDialog(dialogShell, text, updateSiteURL);
             newsDialog.open();
         });
